@@ -6,18 +6,28 @@ class Test extends Component {
         super(props); 
 
         this.state = { 
-            text: '',
-            hasLoaded: false 
+            text: this.props.text,
+            hasLoaded: false,
+            Loading: 'Loading...'
         };
     }
 
-    handleInputChange(value) {
-        this.setState( {text: value} )
+    handleInputChange(event) {
+        if(this.state.hasLoaded === true) {
+            this.setState( {text: event.target.value} );
+        }
+        else {
+            this.setState({ Loading: event.target.value} );
+        }
     }
 
     handleClick() {
-        console.log(this.state)
+        console.log(this.state.hasLoaded)
     }
+
+    // componentDidMount() {
+    //     this.setState( {hasLoaded: true}); 
+    // }
 
     render () {
         return (
@@ -26,7 +36,7 @@ class Test extends Component {
                 <input
                 placeholder ='What is your name?'
                 value = {this.state.text}
-                onChange = { (event) => this.handleInputChange(event.target.value) }
+                onChange = { (event) => this.handleInputChange(event) }
                 />
                 <button onClick = { (e) => this.handleClick(e) }>
                     Click Me
